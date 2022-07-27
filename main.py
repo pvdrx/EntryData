@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from time import sleep
 
-CHROME_DRIVER_PATH = "C:\development\chromedriver.exe"
+CHROME_DRIVER_PATH = "Your driver location"
 s = Service(CHROME_DRIVER_PATH)
 
 form_url = "https://docs.google.com/forms/d/e/1FAIpQLScZIQRsYGMztwXDjf3xxo3ql0wQZKYd3cfslV-YNths53Nh1A/viewform"
@@ -22,8 +22,7 @@ zillow_url = "https://www.zillow.com/san-francisco-ca/rentals/1-_beds/?searchQue
              "%22isListVisible%22%3Atrue%7D "
 
 header = {"Accept-Language": "en-US,en;q=0.9",
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-                        " (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"}
+          "User-Agent": "Your user agent"}
 
 response = requests.get(zillow_url, headers=header)
 
@@ -33,13 +32,13 @@ soup = BeautifulSoup(website, "html.parser")
 
 all_address = soup.find_all("address", attrs={"data-test": "property-card-addr"})
 address_list = [address.get_text() for address in all_address]
-print(address_list)
+# print(address_list)
 
 prices = soup.find_all("span", attrs={"data-test":"property-card-price"})
 prices_list = [price.get_text() for price in prices]
 clean_prices = [numbers.replace("/", "").replace("+ 1 bd", "").replace("mo", "").replace("+", "")
                 for numbers in prices_list]
-print(clean_prices)
+# print(clean_prices)
 
 links = []
 for a in soup.find_all('a', class_="StyledPropertyCardDataArea-c11n-8-69-2__sc-yipmu-0 dZxoFm"
@@ -49,7 +48,7 @@ for a in soup.find_all('a', class_="StyledPropertyCardDataArea-c11n-8-69-2__sc-y
     else:
         links.append(a['href'])
 
-print(links)
+# print(links)
 
 driver = webdriver.Chrome(service=s)
 
